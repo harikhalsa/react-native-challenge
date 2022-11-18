@@ -15,6 +15,10 @@
 #import <ReactCommon/RCTTurboModuleManager.h>
 
 #import <react/config/ReactNativeConfig.h>
+#import <FullStory/FullStory-Swift.h>
+#import <FullStory/FS.h>
+
+FS.delegate = self;
 
 static NSString *const kRNConcurrentRoot = @"concurrentRoot";
 
@@ -29,7 +33,7 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
 
 @implementation AppDelegate
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary  *)launchOptions
 {
   RCTAppSetupPrepareApp(application);
 
@@ -58,6 +62,17 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
   return YES;
+}
+
+// Implement the optional methods
+- (void)fullstoryDidTerminateWithError:(NSError *)error {
+    NSLog(@"FullStory did terminate: %@", error);
+}
+- (void)fullstoryDidStartSession:(NSString *)sessionUrl {
+    NSLog(@"FullStory did start session with URL %@", sessionUrl);
+}
+- (void)fullstoryDidStopSession {
+    NSLog(@"FullStory has stopped session");
 }
 
 /// This method controls whether the `concurrentRoot`feature of React18 is turned on or off.

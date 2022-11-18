@@ -3,6 +3,7 @@ import {View, Text} from 'react-native';
 import {CatCallButton} from './CatCallButton';
 import {PrevNextButtons} from './PrevNextButtons';
 import {pallette} from './utils/colors';
+import FullStory from '@fullstory/react-native/src';
 
 // export type CatSoundNameType = 'meow' | 'sadMeow' | 'angryMeow' | 'kittenMeow';
 
@@ -11,6 +12,10 @@ export const Home = () => {
   const [sound, setSound] = useState();
 
   console.log('soundName', soundName);
+
+  FullStory.event('RN Challenge Session Captured', {
+    Name: 'Hari',
+   });
 
   useEffect(() => {
     console.log('changing sound when soundName changes');

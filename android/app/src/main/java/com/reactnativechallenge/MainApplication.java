@@ -12,6 +12,10 @@ import com.facebook.soloader.SoLoader;
 import com.reactnativechallenge.newarchitecture.MainApplicationReactNativeHost;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import com.fullstory.FS;
+import com.fullstory.FSOnReadyListener;
+import com.fullstory.FSSessionData;
+
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -52,11 +56,20 @@ public class MainApplication extends Application implements ReactApplication {
   @Override
   public void onCreate() {
     super.onCreate();
+      FS.setReadyListener(new FSSessionReadyListener());
     // If you opted-in for the New Architecture, we enable the TurboModule system
     ReactFeatureFlags.useTurboModules = BuildConfig.IS_NEW_ARCHITECTURE_ENABLED;
     SoLoader.init(this, /* native exopackage */ false);
     initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
   }
+
+    private static class FSSessionReadyListener implements FSOnReadyListener {
+        @Override
+        public void onReady(FSSessionData sessionData) {
+            String sessionUrl = sessionData.getCurrentSessionURL();
+            Log.d("FullStory", "Session URL is: " + sessionUrl);
+        }
+    }
 
   /**
    * Loads Flipper in React Native templates. Call this in the onCreate method with something like
